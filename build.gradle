@@ -1,12 +1,36 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.0-SNAPSHOT'
+    id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group 'com.example'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 17
+sourceCompatibility = 16
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication){
+            artifact("build/libs/my-app-$version-plain"+".jar"){
+                extension 'jar'
+            }
+        }
+    }
+    repositories  {
+        maven {
+            name 'nexus'
+            url "http://143.244.177.218:8081/repository/maven-snapshots/"
+            credentials {
+                username project.repoUser
+                password project.repoPassword
+                allowInsecureProtocol = true
+
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
