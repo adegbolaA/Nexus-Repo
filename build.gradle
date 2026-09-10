@@ -21,7 +21,8 @@ publishing {
     repositories  {
         maven {
             name 'nexus'
-            url "http://143.244.177.218:8081/repository/maven-snapshots/"
+            // Replace with your own Nexus host, e.g. via -PnexusUrl=http://<host>:8081/...
+            url project.findProperty('nexusUrl') ?: "http://<your-nexus-host>:8081/repository/maven-snapshots/"
             credentials {
                 username project.repoUser
                 password project.repoPassword
